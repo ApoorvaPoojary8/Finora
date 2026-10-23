@@ -68,7 +68,54 @@ async function getTransactions(req, res, next) {
 }
 
 
+async function getSummary(req, res, next) {
+  try {
+    const [result] = await Transaction.aggregate([
+      {
+        $group: {
+          _id: null,
+          totalIncome: {
+            $sum: {
+              $cond: [
+                { $eq: ["$type", "income"] },
+                "$amount",
+                0,
+              ],
+            },
+          },
+          totalExpenses: {
+            $sum: {
+              $cond: [
+                { $eq: ["$type", "expense"] },
+                "$amount",
+                0,
+              ],
+            },
+          },
+        },
+      },
+    ]);
+
+    const totalIncome = (result?.totalIncome || 0) / 100;
+    const totalExpenses = (result?.totalExpenses || 0) / 100;
+
+    return res.status(200).json({
+      totalIncome,
+      totalExpenses,
+      netSavings: totalIncome - totalExpenses,
+    });
+  } catch (error) {
+    next(error);
+  }
+}
+
+
+
 
 
 module.exports = { createTransaction };
-module.exports = { createTransaction, getTransactions };
+module.exports = {
+  createTransaction,
+  getTransactions,
+  getSummary,
+};
