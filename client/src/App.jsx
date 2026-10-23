@@ -60,6 +60,40 @@ function SummaryCard({ title, amount, description, icon: Icon, theme }) {
   );
 }
 
+const recentTransactions = [
+  {
+    id: 1,
+    title: "Monthly Salary",
+    category: "Income",
+    date: "Oct 22, 2026",
+    amount: 45000,
+    type: "income",
+  },
+  {
+    id: 2,
+    title: "Grocery Shopping",
+    category: "Food",
+    date: "Oct 21, 2026",
+    amount: 1250,
+    type: "expense",
+  },
+  {
+    id: 3,
+    title: "Electricity Bill",
+    category: "Utilities",
+    date: "Oct 20, 2026",
+    amount: 850,
+    type: "expense",
+  },
+  {
+    id: 4,
+    title: "Movie Tickets",
+    category: "Entertainment",
+    date: "Oct 19, 2026",
+    amount: 420,
+    type: "expense",
+  },
+];
 
 
 
@@ -181,6 +215,63 @@ function App() {
             Explore your finances
           </button>
         </section>
+        <section className="mb-8 rounded-3xl border border-[#EAE3D8] bg-[#FFFEFB] p-6 md:p-8">
+  <div className="mb-6 flex flex-wrap items-center justify-between gap-3">
+    <div>
+      <h3 className="text-xl font-extrabold">Recent Transactions</h3>
+      <p className="mt-1 text-sm text-[#92897D]">
+        Keep track of where your money goes.
+      </p>
+    </div>
+
+    <button className="rounded-xl bg-[#F7F0E5] px-4 py-2 text-sm font-semibold text-[#342F29] transition hover:bg-[#F7D89A]">
+      View all
+    </button>
+  </div>
+
+  <div className="space-y-2">
+    {recentTransactions.map((transaction) => (
+      <div
+        key={transaction.id}
+        className="flex flex-wrap items-center justify-between gap-4 rounded-2xl p-4 transition hover:bg-[#F8F5EF]"
+      >
+        <div className="flex items-center gap-4">
+          <div
+            className={`flex h-11 w-11 items-center justify-center rounded-xl ${
+              transaction.type === "income"
+                ? "bg-[#E9EDD9] text-[#737B37]"
+                : "bg-[#F9E5DC] text-[#C65D37]"
+            }`}
+          >
+            {transaction.type === "income" ? (
+              <TrendingUp size={20} />
+            ) : (
+              <ArrowLeftRight size={20} />
+            )}
+          </div>
+
+          <div>
+            <p className="font-bold">{transaction.title}</p>
+            <p className="mt-1 text-xs text-[#92897D]">
+              {transaction.category} · {transaction.date}
+            </p>
+          </div>
+        </div>
+
+        <p
+          className={`font-extrabold ${
+            transaction.type === "income"
+              ? "text-[#737B37]"
+              : "text-[#C65D37]"
+          }`}
+        >
+          {transaction.type === "income" ? "+" : "-"}₹
+          {transaction.amount.toLocaleString("en-IN")}
+        </p>
+      </div>
+    ))}
+  </div>
+</section>
 
         <footer className="mt-8 text-center text-xs text-[#A0978B]">
           Finora · Money, in balance.
