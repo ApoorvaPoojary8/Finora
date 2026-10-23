@@ -110,6 +110,33 @@ async function getSummary(req, res, next) {
 }
 
 
+async function deleteTransaction(req, res, next) {
+  try {
+    const { id } = req.params;
+
+    if (!/^[0-9a-fA-F]{24}$/.test(id)) {
+      return res.status(400).json({
+        message: "Invalid transaction ID",
+      });
+    }
+
+    const transaction = await Transaction.findByIdAndDelete(id);
+
+    if (!transaction) {
+      return res.status(404).json({
+        message: "Transaction not found",
+      });
+    }
+
+    return res.status(200).json({
+      message: "Transaction deleted successfully",
+      id: transaction._id,
+    });
+  } catch (error) {
+    next(error);
+  }
+}
+
 
 
 
@@ -118,4 +145,5 @@ module.exports = {
   createTransaction,
   getTransactions,
   getSummary,
+  deleteTransaction,
 };
