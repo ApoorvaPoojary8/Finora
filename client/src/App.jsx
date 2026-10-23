@@ -95,6 +95,18 @@ const recentTransactions = [
   },
 ];
 
+const spendingBreakdown = [
+  { category: "Food", amount: 4500, color: "bg-[#DF6D41]" },
+  { category: "Transport", amount: 2200, color: "bg-[#8DA6CC]" },
+  { category: "Shopping", amount: 1800, color: "bg-[#AAA648]" },
+  { category: "Bills", amount: 1500, color: "bg-[#F7D89A]" },
+];
+
+const totalSpending = spendingBreakdown.reduce(
+  (total, item) => total + item.amount,
+  0
+);
+
 
 
 function App() {
@@ -272,6 +284,48 @@ function App() {
     ))}
   </div>
 </section>
+
+<section className="mb-8 rounded-3xl border border-[#EAE3D8] bg-[#FFFEFB] p-6 md:p-8">
+  <div className="mb-6">
+    <h3 className="text-xl font-extrabold">Monthly Spending</h3>
+    <p className="mt-1 text-sm text-[#92897D]">
+      See how your expenses are distributed.
+    </p>
+  </div>
+
+  <div className="mb-8">
+    <p className="text-sm text-[#92897D]">Total tracked spending</p>
+    <h4 className="mt-2 text-3xl font-extrabold">
+      ₹{totalSpending.toLocaleString("en-IN")}
+    </h4>
+  </div>
+
+  <div className="space-y-5">
+    {spendingBreakdown.map((item) => {
+      const percentage = (item.amount / totalSpending) * 100;
+
+      return (
+        <div key={item.category}>
+          <div className="mb-2 flex items-center justify-between gap-3 text-sm">
+            <span className="font-semibold">{item.category}</span>
+            <span className="text-[#777064]">
+              ₹{item.amount.toLocaleString("en-IN")} ·{" "}
+              {percentage.toFixed(0)}%
+            </span>
+          </div>
+
+          <div className="h-3 overflow-hidden rounded-full bg-[#F0EBE2]">
+            <div
+              className={`h-full rounded-full transition-all duration-500 ${item.color}`}
+              style={{ width: `${percentage}%` }}
+            />
+          </div>
+        </div>
+      );
+    })}
+  </div>
+</section>
+
 
         <footer className="mt-8 text-center text-xs text-[#A0978B]">
           Finora · Money, in balance.
