@@ -108,6 +108,31 @@ const totalSpending = spendingBreakdown.reduce(
 );
 
 
+const savingsGoals = [
+  {
+    id: 1,
+    title: "New Laptop",
+    saved: 24000,
+    target: 40000,
+    color: "bg-[#DF6D41]",
+  },
+  {
+    id: 2,
+    title: "Emergency Fund",
+    saved: 15000,
+    target: 30000,
+    color: "bg-[#AAA648]",
+  },
+  {
+    id: 3,
+    title: "Dream Vacation",
+    saved: 8000,
+    target: 20000,
+    color: "bg-[#8DA6CC]",
+  },
+];
+
+
 
 function App() {
   return (
@@ -320,6 +345,55 @@ function App() {
               style={{ width: `${percentage}%` }}
             />
           </div>
+        </div>
+      );
+    })}
+  </div>
+</section>
+
+<section className="mb-8 rounded-3xl border border-[#EAE3D8] bg-[#FFFEFB] p-6 md:p-8">
+  <div className="mb-6 flex items-center justify-between gap-3">
+    <div>
+      <h3 className="text-xl font-extrabold">Savings Goals</h3>
+      <p className="mt-1 text-sm text-[#92897D]">
+        Every little step brings you closer.
+      </p>
+    </div>
+    <Target size={24} className="text-[#DF6D41]" />
+  </div>
+
+  <div className="grid gap-5 md:grid-cols-3">
+    {savingsGoals.map((goal) => {
+      const percentage = Math.min(
+        (goal.saved / goal.target) * 100,
+        100
+      );
+
+      return (
+        <div
+          key={goal.id}
+          className="rounded-2xl border border-[#EAE3D8] p-5"
+        >
+          <h4 className="font-bold">{goal.title}</h4>
+
+          <p className="mt-4 text-2xl font-extrabold">
+            ₹{goal.saved.toLocaleString("en-IN")}
+          </p>
+
+          <p className="mt-1 text-sm text-[#92897D]">
+            of ₹{goal.target.toLocaleString("en-IN")}
+          </p>
+
+          <div className="mt-4 h-2.5 overflow-hidden rounded-full bg-[#F0EBE2]">
+            <div
+              className={`h-full rounded-full ${goal.color}`}
+              style={{ width: `${percentage}%` }}
+            />
+          </div>
+
+          <p className="mt-2 text-right text-xs font-semibold text-[#777064]">
+            {percentage.toFixed(0)}% saved
+          </p>
         </div>
       );
     })}
