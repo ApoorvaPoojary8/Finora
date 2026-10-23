@@ -41,4 +41,34 @@ async function createTransaction(req, res, next) {
   }
 }
 
+
+async function getTransactions(req, res, next) {
+  try {
+    const transactions = await Transaction.find().sort({
+      date: -1,
+      createdAt: -1,
+    });
+
+    return res.status(200).json({
+      count: transactions.length,
+      transactions: transactions.map((transaction) => ({
+        _id: transaction._id,
+        description: transaction.description,
+        amount: transaction.amount / 100,
+        type: transaction.type,
+        category: transaction.category,
+        date: transaction.date,
+        createdAt: transaction.createdAt,
+        updatedAt: transaction.updatedAt,
+      })),
+    });
+  } catch (error) {
+    next(error);
+  }
+}
+
+
+
+
 module.exports = { createTransaction };
+module.exports = { createTransaction, getTransactions };
