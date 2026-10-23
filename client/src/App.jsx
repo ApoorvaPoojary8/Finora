@@ -1,3 +1,4 @@
+import { useState } from "react";
 import {
   Wallet,
   LayoutDashboard,
@@ -135,6 +136,7 @@ const savingsGoals = [
 
 
 function App() {
+  const [activePage, setActivePage] = useState("Dashboard");
   return (
     <div className="min-h-screen bg-[#F8F5EF] text-[#342F29] md:flex">
       {/* Sidebar */}
@@ -161,16 +163,17 @@ function App() {
         <nav className="space-y-2">
           {navigation.map(({ name, icon: Icon }) => (
             <button
-              key={name}
-              className={`flex w-full items-center gap-3 rounded-xl px-4 py-3 text-sm font-semibold transition ${
-                name === "Dashboard"
-                  ? "bg-[#DF6D41] text-white"
-                  : "text-[#777064] hover:bg-[#F7F0E5]"
-              }`}
-            >
-              <Icon size={19} />
-              {name}
-            </button>
+  key={name}
+  onClick={() => setActivePage(name)}
+  className={`flex w-full items-center gap-3 rounded-xl px-4 py-3 text-sm font-semibold transition ${
+    activePage === name
+      ? "bg-[#DF6D41] text-white"
+      : "text-[#777064] hover:bg-[#F7F0E5]"
+  }`}
+>
+  <Icon size={19} />
+  {name}
+</button>
           ))}
         </nav>
 
