@@ -1,122 +1,193 @@
-import { useState } from 'react'
-import heroImg from './assets/hero.png'
-import reactLogo from './assets/react.svg'
-import viteLogo from './assets/vite.svg'
-import './App.css'
+import {
+  Wallet,
+  LayoutDashboard,
+  ArrowLeftRight,
+  ChartNoAxesCombined,
+  PiggyBank,
+  Target,
+  Settings,
+  TrendingUp,
+  TrendingDown,
+} from "lucide-react";
 
-function App() {
-  const [count, setCount] = useState(0)
+const navigation = [
+  { name: "Dashboard", icon: LayoutDashboard },
+  { name: "Transactions", icon: ArrowLeftRight },
+  { name: "Analytics", icon: ChartNoAxesCombined },
+  { name: "Budgets", icon: PiggyBank },
+  { name: "Savings Goals", icon: Target },
+
+];
+
+function SummaryCard({ title, amount, description, icon: Icon, theme }) {
+  const styles = {
+    canyon: {
+      card: "bg-[#DF6D41] text-white",
+      icon: "bg-white/15 text-white",
+      detail: "text-white/75",
+    },
+    olive: {
+      card: "bg-[#AAA648] text-white",
+      icon: "bg-white/20 text-white",
+      detail: "text-white/80",
+    },
+    sky: {
+      card: "bg-[#8DA6CC] text-white",
+      icon: "bg-white/20 text-white",
+      detail: "text-white/85",
+    },
+  };
+
+  const colors = styles[theme];
 
   return (
-    <>
-      <section id="center">
-        <div className="hero">
-          <img src={heroImg} className="base" width="170" height="179" alt="" />
-          <img src={reactLogo} className="framework" alt="React logo" />
-          <img src={viteLogo} className="vite" alt="Vite logo" />
-        </div>
+    <div className={`rounded-3xl p-6 shadow-sm transition hover:-translate-y-1 hover:shadow-lg ${colors.card}`}>
+      <div className="flex items-start justify-between">
         <div>
-          <h1>Get started</h1>
-          <p>
-            Edit <code>src/App.jsx</code> and save to test <code>HMR</code>
-          </p>
+          <p className="text-sm font-medium opacity-90">{title}</p>
+          <h3 className="mt-4 text-3xl font-extrabold tracking-tight">
+            {amount}
+          </h3>
         </div>
-        <button
-          type="button"
-          className="counter"
-          onClick={() => setCount((count) => count + 1)}
-        >
-          Count is {count}
-        </button>
-      </section>
 
-      <div className="ticks"></div>
-
-      <section id="next-steps">
-        <div id="docs">
-          <svg className="icon" role="presentation" aria-hidden="true">
-            <use href="/icons.svg#documentation-icon"></use>
-          </svg>
-          <h2>Documentation</h2>
-          <p>Your questions, answered</p>
-          <ul>
-            <li>
-              <a href="https://vite.dev/" target="_blank">
-                <img className="logo" src={viteLogo} alt="" />
-                Explore Vite
-              </a>
-            </li>
-            <li>
-              <a href="https://react.dev/" target="_blank">
-                <img className="button-icon" src={reactLogo} alt="" />
-                Learn more
-              </a>
-            </li>
-          </ul>
+        <div className={`rounded-2xl p-3 ${colors.icon}`}>
+          <Icon size={23} />
         </div>
-        <div id="social">
-          <svg className="icon" role="presentation" aria-hidden="true">
-            <use href="/icons.svg#social-icon"></use>
-          </svg>
-          <h2>Connect with us</h2>
-          <p>Join the Vite community</p>
-          <ul>
-            <li>
-              <a href="https://github.com/vitejs/vite" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#github-icon"></use>
-                </svg>
-                GitHub
-              </a>
-            </li>
-            <li>
-              <a href="https://chat.vite.dev/" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#discord-icon"></use>
-                </svg>
-                Discord
-              </a>
-            </li>
-            <li>
-              <a href="https://x.com/vite_js" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#x-icon"></use>
-                </svg>
-                X.com
-              </a>
-            </li>
-            <li>
-              <a href="https://bsky.app/profile/vite.dev" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#bluesky-icon"></use>
-                </svg>
-                Bluesky
-              </a>
-            </li>
-          </ul>
-        </div>
-      </section>
+      </div>
 
-      <div className="ticks"></div>
-      <section id="spacer"></section>
-    </>
-  )
+      <p className={`mt-5 text-sm ${colors.detail}`}>{description}</p>
+    </div>
+  );
 }
 
-export default App
+
+
+
+function App() {
+  return (
+    <div className="min-h-screen bg-[#F8F5EF] text-[#342F29] md:flex">
+      {/* Sidebar */}
+      <aside className="flex w-full flex-col border-r border-[#EAE3D8] bg-[#FFFEFB] p-6 md:min-h-screen md:w-64">
+        <div className="mb-10 flex items-center gap-3">
+          <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-[#DF6D41] text-white">
+            <Wallet size={23} />
+          </div>
+
+          <div>
+            <h1 className="text-2xl font-extrabold">
+              finora<span className="text-[#DF6D41]">.</span>
+            </h1>
+            <p className="text-[10px] tracking-widest text-[#92897D]">
+              MONEY, IN BALANCE
+            </p>
+          </div>
+        </div>
+
+        <p className="mb-3 text-xs font-bold uppercase tracking-widest text-[#A0978B]">
+          Workspace
+        </p>
+
+        <nav className="space-y-2">
+          {navigation.map(({ name, icon: Icon }) => (
+            <button
+              key={name}
+              className={`flex w-full items-center gap-3 rounded-xl px-4 py-3 text-sm font-semibold transition ${
+                name === "Dashboard"
+                  ? "bg-[#DF6D41] text-white"
+                  : "text-[#777064] hover:bg-[#F7F0E5]"
+              }`}
+            >
+              <Icon size={19} />
+              {name}
+            </button>
+          ))}
+        </nav>
+
+        <div className="mt-auto hidden rounded-2xl bg-[#F7D89A] p-5 md:block">
+          <Target size={22} className="mb-3 text-[#8D6B28]" />
+          <p className="font-bold text-[#51432B]">
+            Small steps add up.
+          </p>
+          <p className="mt-2 text-sm leading-6 text-[#75664B]">
+            Keep your goals close and your money intentional.
+          </p>
+        </div>
+
+        <button className="mt-6 flex items-center gap-3 rounded-xl px-4 py-3 text-sm text-[#777064] hover:bg-[#F7F0E5]">
+          <Settings size={19} />
+          Settings
+        </button>
+      </aside>
+
+      {/* Main content */}
+      <main className="min-w-0 flex-1 p-6 md:p-10">
+        <header className="mb-10">
+          <p className="text-sm text-[#92897D]">
+            Your personal finance space
+          </p>
+          <h2 className="mt-2 text-3xl font-extrabold tracking-tight md:text-4xl">
+            Welcome to Finora<span className="text-[#DF6D41]">.</span>
+          </h2>
+          <p className="mt-3 max-w-xl leading-7 text-[#92897D]">
+            A calmer, clearer way to understand your money
+            and make room for what matters.
+          </p>
+        </header>
+        <section className="mb-8 grid gap-5 sm:grid-cols-2 xl:grid-cols-3">
+  <SummaryCard
+    title="Available Balance"
+    amount="₹42,480"
+    description="Your income minus expenses"
+    icon={Wallet}
+    theme="canyon"
+  />
+
+  <SummaryCard
+    title="Total Income"
+    amount="₹45,000"
+    description="Money received"
+    icon={TrendingUp}
+    theme="olive"
+  />
+
+  <SummaryCard
+    title="Total Expenses"
+    amount="₹2,520"
+    description="Money spent"
+    icon={TrendingDown}
+    theme="sky"
+  />
+</section>
+
+        <section className="rounded-3xl border border-[#EAE3D8] bg-white p-8 md:p-12">
+          <div className="mb-5 flex h-14 w-14 items-center justify-center rounded-2xl bg-[#FBE7DE] text-[#C95B34]">
+            <Wallet size={28} />
+          </div>
+
+          <p className="text-sm font-semibold text-[#92897D]">
+            YOUR FINANCIAL JOURNEY STARTS HERE
+          </p>
+
+          <h3 className="mt-3 max-w-lg text-2xl font-extrabold md:text-3xl">
+            Make every rupee feel a little more intentional.
+          </h3>
+
+          <p className="mt-3 max-w-lg leading-7 text-[#92897D]">
+            Track your income, understand your spending,
+            and build habits that help you reach your goals.
+          </p>
+
+          <button className="mt-7 rounded-xl bg-[#DF6D41] px-6 py-3 font-bold text-white transition hover:bg-[#C95B34]">
+            Explore your finances
+          </button>
+        </section>
+
+        <footer className="mt-8 text-center text-xs text-[#A0978B]">
+          Finora · Money, in balance.
+        </footer>
+      </main>
+    </div>
+  );
+}
+
+export default App;
